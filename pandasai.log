@@ -1,0 +1,785 @@
+2024-12-21 09:27:20 [INFO] Question: Plot scatter chart with 2 any columns
+2024-12-21 09:27:21 [INFO] Running PandasAI with local LLM...
+2024-12-21 09:27:21 [INFO] Prompt ID: e904490f-d037-445a-bee0-1d28f8907e11
+2024-12-21 09:27:21 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-12-21 09:27:21 [INFO] Executing Step 0: ValidatePipelineInput
+2024-12-21 09:27:21 [INFO] Executing Step 1: CacheLookup
+2024-12-21 09:27:21 [INFO] Executing Step 2: PromptGeneration
+2024-12-21 09:27:21 [ERROR] Pipeline failed on step 2: 'Index' object has no attribute '_format_native_types'
+2024-12-21 09:28:15 [INFO] Question: return dataframe with age > 35
+2024-12-21 09:28:15 [INFO] Running PandasAI with local LLM...
+2024-12-21 09:28:15 [INFO] Prompt ID: 3a257510-9168-472f-9809-5612e8b9ef25
+2024-12-21 09:28:15 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-12-21 09:28:15 [INFO] Executing Step 0: ValidatePipelineInput
+2024-12-21 09:28:15 [INFO] Executing Step 1: CacheLookup
+2024-12-21 09:28:15 [INFO] Executing Step 2: PromptGeneration
+2024-12-21 09:28:15 [ERROR] Pipeline failed on step 2: 'Index' object has no attribute '_format_native_types'
+2024-12-21 09:33:19 [INFO] Question: return dataframe with age > 35
+2024-12-21 09:33:19 [INFO] Running PandasAI with local LLM...
+2024-12-21 09:33:19 [INFO] Prompt ID: f5d98132-9b84-4334-9e60-952a0135aac5
+2024-12-21 09:33:19 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-12-21 09:33:19 [INFO] Executing Step 0: ValidatePipelineInput
+2024-12-21 09:33:19 [INFO] Executing Step 1: CacheLookup
+2024-12-21 09:33:19 [INFO] Executing Step 2: PromptGeneration
+2024-12-21 09:33:19 [ERROR] Pipeline failed on step 2: 'Index' object has no attribute '_format_native_types'
+2024-12-21 09:37:27 [INFO] Question: return dataframe with age > 35
+2024-12-21 09:37:27 [INFO] Running PandasAI with local LLM...
+2024-12-21 09:37:27 [INFO] Prompt ID: f11e66f1-2cb8-4410-9057-099cf28947a1
+2024-12-21 09:37:27 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-12-21 09:37:27 [INFO] Executing Step 0: ValidatePipelineInput
+2024-12-21 09:37:27 [INFO] Executing Step 1: CacheLookup
+2024-12-21 09:37:27 [INFO] Executing Step 2: PromptGeneration
+2024-12-21 09:37:27 [ERROR] Pipeline failed on step 2: 'Index' object has no attribute '_format_native_types'
+2024-12-21 09:39:12 [INFO] Question: return dataframe with age > 35
+2024-12-21 09:39:13 [INFO] Running PandasAI with local LLM...
+2024-12-21 09:39:13 [INFO] Prompt ID: 5d4ba167-768c-4f2f-8a36-1ced9a8bd02d
+2024-12-21 09:39:13 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-12-21 09:39:13 [INFO] Executing Step 0: ValidatePipelineInput
+2024-12-21 09:39:13 [INFO] Executing Step 1: CacheLookup
+2024-12-21 09:39:13 [INFO] Executing Step 2: PromptGeneration
+2024-12-21 09:39:13 [INFO] Using prompt: <dataframe>
+dfs[0]:506x14
+crim,zn,indus,chas,nox,rm,age,dis,rad,tax,ptratio,black,lstat,medv
+0.98843,33.0,9.69,1,0.447,6.897,79.7,1.9799,4,430,20.1,370.31,11.48,21.7
+19.6091,28.0,21.89,0,0.415,5.602,15.7,2.3552,5,398,18.2,395.43,22.74,15.0
+0.14866,17.5,5.64,1,0.439,4.628,89.0,4.2392,7,422,22.0,374.71,11.32,7.4
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ return dataframe with age > 35
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-12-21 09:39:13 [INFO] Executing Step 3: CodeGenerator
+2024-12-21 09:40:52 [INFO] HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-21 09:40:52 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:506x14
+crim,zn,indus,chas,nox,rm,age,dis,rad,tax,ptratio,black,lstat,medv
+0.98843,33.0,9.69,1,0.447,6.897,79.7,1.9799,4,430,20.1,370.31,11.48,21.7
+19.6091,28.0,21.89,0,0.415,5.602,15.7,2.3552,5,398,18.2,395.43,22.74,15.0
+0.14866,17.5,5.64,1,0.439,4.628,89.0,4.2392,7,422,22.0,374.71,11.32,7.4
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ return dataframe with age > 35
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-12-21 09:40:52 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+def get_df():
+    # Declare result var:
+    type_ = {
+        "type": "number",
+        "value": 46.0,  # Replace with your data age > 35 threshold value
+    }
+    
+    # Create a sample dataframe (replace with actual dataset)
+    dfs: list[pd.DataFrame] = [
+        pd.DataFrame({
+            "age": [506],
+            "crime": [0.98843],
+            "zn": [33.0],
+            "indus": [9.69],
+            "chas": [1.0],
+            "nox": [0.447],
+            "rm": [6.897, 5.602],
+            "age_19": [79.7, 15.7],
+            "dis": [1.9799],
+            "rad": [4.4312],
+            "ptratio": [1.9799, 4.2392],
+            "black": [21.7],
+            "lstat": [11.48],
+            "medv": [21.7],
+        }),
+    ]
+    
+    # Return the dataframe with age > 35 threshold value
+    return pandas.DataFrame(dfs[0], columns=dfs[0].iloc[:-1]).copy()
+    
+
+result = {}
+def generate_plot(result_dict):
+    def plot():
+        # For demo purposes, generate a dummy data
+        result_dicts = {
+            "type": [string],
+            "value": pd.Series([float("nan")], index=["sample_val"]),
+            "title": ""
+        }
+        
+        plt.plot(range(1, len(result_dicts["value"])) + 100)
+    
+    # Use matplotlib for creating the chart (change save as png according to your preference)
+    import matplotlib.pyplot as plt
+
+    return plot()
+
+# Read data
+df = get_df()
+result_value_45 = df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0]
+result_dict = {
+  'type': type(result_value_45),
+  'value': round(float(result_value_45),2) #round to two decimal
+}
+result.update(result_dict)
+
+# Create the plot (optional)
+plot_result = generate_plot(result.copy())
+            ```
+            
+2024-12-21 09:40:52 [INFO] Executing Step 4: CachePopulation
+2024-12-21 09:40:52 [INFO] Executing Step 5: CodeCleaning
+2024-12-21 09:40:52 [INFO] 
+Code running:
+```
+def get_df():
+    type_ = {'type': 'number', 'value': 46.0}
+    dfs: list[pd.DataFrame] = [pd.DataFrame({'age': [506], 'crime': [0.98843], 'zn': [33.0], 'indus': [9.69], 'chas': [1.0], 'nox': [0.447], 'rm': [6.897, 5.602], 'age_19': [79.7, 15.7], 'dis': [1.9799], 'rad': [4.4312], 'ptratio': [1.9799, 4.2392], 'black': [21.7], 'lstat': [11.48], 'medv': [21.7]})]
+    return pandas.DataFrame(dfs[0], columns=dfs[0].iloc[:-1]).copy()
+
+
+result = {}
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': [string], 'value': pd.Series([float('nan')], index=['sample_val']), 'title': ''}
+        plt.plot(range(1, len(result_dicts['value'])) + 100)
+    import matplotlib.pyplot as plt
+    return plot()
+
+
+df = get_df()
+result_value_45 = df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0]
+result_dict = {'type': type(result_value_45), 'value': round(float(result_value_45), 2)}
+result.update(result_dict)
+plot_result = generate_plot(result.copy())
+        ```
+2024-12-21 09:40:52 [INFO] Executing Step 6: CodeExecution
+2024-12-21 09:40:52 [ERROR] Failed with error: Traceback (most recent call last):
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 19, in <module>
+  File "<string>", line 3, in get_df
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\safe_libs\base_restricted_module.py", line 13, in wrapper
+    return func(*args, **kwargs)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\frame.py", line 664, in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy, typ=manager)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 493, in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, typ=typ, consolidate=copy)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 118, in arrays_to_mgr
+    index = _extract_index(arrays)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 666, in _extract_index
+    raise ValueError("All arrays must be of the same length")
+ValueError: All arrays must be of the same length
+
+2024-12-21 09:40:52 [WARNING] Failed to execute code retrying with a correction framework [retry number: 1]
+2024-12-21 09:40:52 [INFO] Executing Pipeline: ErrorCorrectionPipeline
+2024-12-21 09:40:52 [INFO] Executing Step 0: ErrorPromptGeneration
+2024-12-21 09:40:52 [INFO] Using prompt: <dataframe>
+dfs[0]:506x14
+crim,zn,indus,chas,nox,rm,age,dis,rad,tax,ptratio,black,lstat,medv
+0.98843,33.0,9.69,1,0.447,6.897,79.7,1.9799,4,430,20.1,370.31,11.48,21.7
+19.6091,28.0,21.89,0,0.415,5.602,15.7,2.3552,5,398,18.2,395.43,22.74,15.0
+0.14866,17.5,5.64,1,0.439,4.628,89.0,4.2392,7,422,22.0,374.71,11.32,7.4
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ return dataframe with age > 35
+
+You generated this python code:
+def get_df():
+    type_ = {'type': 'number', 'value': 46.0}
+    dfs: list[pd.DataFrame] = [pd.DataFrame({'age': [506], 'crime': [0.98843], 'zn': [33.0], 'indus': [9.69], 'chas': [1.0], 'nox': [0.447], 'rm': [6.897, 5.602], 'age_19': [79.7, 15.7], 'dis': [1.9799], 'rad': [4.4312], 'ptratio': [1.9799, 4.2392], 'black': [21.7], 'lstat': [11.48], 'medv': [21.7]})]
+    return pandas.DataFrame(dfs[0], columns=dfs[0].iloc[:-1]).copy()
+
+
+result = {}
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': [string], 'value': pd.Series([float('nan')], index=['sample_val']), 'title': ''}
+        plt.plot(range(1, len(result_dicts['value'])) + 100)
+    import matplotlib.pyplot as plt
+    return plot()
+
+
+df = get_df()
+result_value_45 = df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0]
+result_dict = {'type': type(result_value_45), 'value': round(float(result_value_45), 2)}
+result.update(result_dict)
+plot_result = generate_plot(result.copy())
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 19, in <module>
+  File "<string>", line 3, in get_df
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\safe_libs\base_restricted_module.py", line 13, in wrapper
+    return func(*args, **kwargs)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\frame.py", line 664, in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy, typ=manager)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 493, in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, typ=typ, consolidate=copy)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 118, in arrays_to_mgr
+    index = _extract_index(arrays)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 666, in _extract_index
+    raise ValueError("All arrays must be of the same length")
+ValueError: All arrays must be of the same length
+
+
+Fix the python code above and return the new python code:
+2024-12-21 09:40:52 [INFO] Executing Step 1: CodeGenerator
+2024-12-21 09:43:17 [INFO] HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-21 09:43:17 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:506x14
+crim,zn,indus,chas,nox,rm,age,dis,rad,tax,ptratio,black,lstat,medv
+0.98843,33.0,9.69,1,0.447,6.897,79.7,1.9799,4,430,20.1,370.31,11.48,21.7
+19.6091,28.0,21.89,0,0.415,5.602,15.7,2.3552,5,398,18.2,395.43,22.74,15.0
+0.14866,17.5,5.64,1,0.439,4.628,89.0,4.2392,7,422,22.0,374.71,11.32,7.4
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ return dataframe with age > 35
+
+You generated this python code:
+def get_df():
+    type_ = {'type': 'number', 'value': 46.0}
+    dfs: list[pd.DataFrame] = [pd.DataFrame({'age': [506], 'crime': [0.98843], 'zn': [33.0], 'indus': [9.69], 'chas': [1.0], 'nox': [0.447], 'rm': [6.897, 5.602], 'age_19': [79.7, 15.7], 'dis': [1.9799], 'rad': [4.4312], 'ptratio': [1.9799, 4.2392], 'black': [21.7], 'lstat': [11.48], 'medv': [21.7]})]
+    return pandas.DataFrame(dfs[0], columns=dfs[0].iloc[:-1]).copy()
+
+
+result = {}
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': [string], 'value': pd.Series([float('nan')], index=['sample_val']), 'title': ''}
+        plt.plot(range(1, len(result_dicts['value'])) + 100)
+    import matplotlib.pyplot as plt
+    return plot()
+
+
+df = get_df()
+result_value_45 = df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0]
+result_dict = {'type': type(result_value_45), 'value': round(float(result_value_45), 2)}
+result.update(result_dict)
+plot_result = generate_plot(result.copy())
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 19, in <module>
+  File "<string>", line 3, in get_df
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\safe_libs\base_restricted_module.py", line 13, in wrapper
+    return func(*args, **kwargs)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\frame.py", line 664, in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy, typ=manager)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 493, in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, typ=typ, consolidate=copy)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 118, in arrays_to_mgr
+    index = _extract_index(arrays)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandas\core\internals\construction.py", line 666, in _extract_index
+    raise ValueError("All arrays must be of the same length")
+ValueError: All arrays must be of the same length
+
+
+Fix the python code above and return the new python code:
+            
+2024-12-21 09:43:17 [INFO] Code generated:
+            ```
+            def get_df():
+    # Remove the first row of each list, which contains a single number
+    dfs: list[pd.DataFrame] = [df.iloc[i:i+2][0] for i in range(1, len(df)) for df in [df[:i], df[i+2:]]]
+
+    return pd.DataFrame(dfs[0], columns=dfs[0].iloc[0:-1]).copy()
+
+
+result = {}
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': ['string'], 'value': pd.Series([float('nan')], index=['sample_val']), 'title': ''}
+        plt.plot(range(1, len(result_dicts['value'])) + 100)
+    import matplotlib.pyplot as plt
+    return plot()
+
+
+df = get_df()
+result_value_35 = df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0]
+result_dict = {'type': type(result_value_35), 'value': round(float(result_value_35), 2)}
+result.update(result_dict)
+plot_result = generate_plot(result.copy())
+
+# You can also add more dataframes to the result if needed
+if not result.empty:
+    print("The DataFrame with age > 35 is:")
+    print(df.loc[df['age'] > 35])
+            ```
+            
+2024-12-21 09:43:17 [INFO] Executing Step 2: CodeCleaning
+2024-12-21 09:43:17 [INFO] 
+Code running:
+```
+def get_df():
+    dfs: list[pd.DataFrame] = [df.iloc[i:i + 2][0] for i in range(1, len(df)) for df in [df[:i], df[i + 2:]]]
+    return pd.DataFrame(dfs[0], columns=dfs[0].iloc[0:-1]).copy()
+
+
+result = {}
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': ['string'], 'value': pd.Series([float('nan')], index=['sample_val']), 'title': ''}
+        plt.plot(range(1, len(result_dicts['value'])) + 100)
+    import matplotlib.pyplot as plt
+    return plot()
+
+
+df = get_df()
+result_value_35 = df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0]
+result_dict = {'type': type(result_value_35), 'value': round(float(result_value_35), 2)}
+result.update(result_dict)
+plot_result = generate_plot(result.copy())
+if not result.empty:
+    print('The DataFrame with age > 35 is:')
+    print(df.loc[df['age'] > 35])
+        ```
+2024-12-21 09:43:17 [ERROR] Failed with error: Traceback (most recent call last):
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 18, in <module>
+  File "<string>", line 2, in get_df
+  File "<string>", line 2, in <listcomp>
+UnboundLocalError: local variable 'df' referenced before assignment
+
+2024-12-21 09:43:17 [WARNING] Failed to execute code retrying with a correction framework [retry number: 2]
+2024-12-21 09:43:17 [INFO] Executing Pipeline: ErrorCorrectionPipeline
+2024-12-21 09:43:17 [INFO] Executing Step 0: ErrorPromptGeneration
+2024-12-21 09:43:17 [INFO] Using prompt: <dataframe>
+dfs[0]:506x14
+crim,zn,indus,chas,nox,rm,age,dis,rad,tax,ptratio,black,lstat,medv
+0.98843,33.0,9.69,1,0.447,6.897,79.7,1.9799,4,430,20.1,370.31,11.48,21.7
+19.6091,28.0,21.89,0,0.415,5.602,15.7,2.3552,5,398,18.2,395.43,22.74,15.0
+0.14866,17.5,5.64,1,0.439,4.628,89.0,4.2392,7,422,22.0,374.71,11.32,7.4
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ return dataframe with age > 35
+
+You generated this python code:
+def get_df():
+    dfs: list[pd.DataFrame] = [df.iloc[i:i + 2][0] for i in range(1, len(df)) for df in [df[:i], df[i + 2:]]]
+    return pd.DataFrame(dfs[0], columns=dfs[0].iloc[0:-1]).copy()
+
+
+result = {}
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': ['string'], 'value': pd.Series([float('nan')], index=['sample_val']), 'title': ''}
+        plt.plot(range(1, len(result_dicts['value'])) + 100)
+    import matplotlib.pyplot as plt
+    return plot()
+
+
+df = get_df()
+result_value_35 = df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0]
+result_dict = {'type': type(result_value_35), 'value': round(float(result_value_35), 2)}
+result.update(result_dict)
+plot_result = generate_plot(result.copy())
+if not result.empty:
+    print('The DataFrame with age > 35 is:')
+    print(df.loc[df['age'] > 35])
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 18, in <module>
+  File "<string>", line 2, in get_df
+  File "<string>", line 2, in <listcomp>
+UnboundLocalError: local variable 'df' referenced before assignment
+
+
+Fix the python code above and return the new python code:
+2024-12-21 09:43:17 [INFO] Executing Step 1: CodeGenerator
+2024-12-21 09:44:52 [INFO] HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-21 09:44:52 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:506x14
+crim,zn,indus,chas,nox,rm,age,dis,rad,tax,ptratio,black,lstat,medv
+0.98843,33.0,9.69,1,0.447,6.897,79.7,1.9799,4,430,20.1,370.31,11.48,21.7
+19.6091,28.0,21.89,0,0.415,5.602,15.7,2.3552,5,398,18.2,395.43,22.74,15.0
+0.14866,17.5,5.64,1,0.439,4.628,89.0,4.2392,7,422,22.0,374.71,11.32,7.4
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ return dataframe with age > 35
+
+You generated this python code:
+def get_df():
+    dfs: list[pd.DataFrame] = [df.iloc[i:i + 2][0] for i in range(1, len(df)) for df in [df[:i], df[i + 2:]]]
+    return pd.DataFrame(dfs[0], columns=dfs[0].iloc[0:-1]).copy()
+
+
+result = {}
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': ['string'], 'value': pd.Series([float('nan')], index=['sample_val']), 'title': ''}
+        plt.plot(range(1, len(result_dicts['value'])) + 100)
+    import matplotlib.pyplot as plt
+    return plot()
+
+
+df = get_df()
+result_value_35 = df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0]
+result_dict = {'type': type(result_value_35), 'value': round(float(result_value_35), 2)}
+result.update(result_dict)
+plot_result = generate_plot(result.copy())
+if not result.empty:
+    print('The DataFrame with age > 35 is:')
+    print(df.loc[df['age'] > 35])
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 18, in <module>
+  File "<string>", line 2, in get_df
+  File "<string>", line 2, in <listcomp>
+UnboundLocalError: local variable 'df' referenced before assignment
+
+
+Fix the python code above and return the new python code:
+            
+2024-12-21 09:44:52 [INFO] Code generated:
+            ```
+            import pandas as pd
+
+def get_df():
+    dfs: list[pd.DataFrame] = []
+    for i in range(0, len(df), 2):
+        sub_dfs = [df.iloc[i:i + 2][0]]
+        dfs.append(sub_dfs[0])
+    return pd.concat(dfs).copy()
+
+
+# Create a dataframe
+data = {
+    'age': [79.7, 15.7, 89.0],
+    'crime': [11.48, 22.74, round(float('nan'), 2)],
+    'zn': ['33.0', '28.0', '17.5'],
+    # rest of your data
+}
+df = pd.DataFrame(data)
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': type(result_dict['value']), 'value': float('nan')}
+        plt.plot([1], [result_dicts['value']])
+    import matplotlib.pyplot as plt
+    return plot
+
+
+plot_result = generate_plot({'type': int(type(df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0])),
+                             'value': round(float('nan'), 2)})
+
+print('The DataFrame with age > 35 is:')
+if result_dict:
+    print(df.loc[df['age'] > 35])
+else:
+    print("No data to print.")
+
+# Update the dataframe
+df.loc[df['age'] > 35, ['crime', 'zn']] = [round(float(result_dict['value']), 2) for row in result_dict['value'] 
+                            if isinstance(row, list) and not (row[0] == row[1])]
+
+print(df.loc[df['age'] > 35])
+            ```
+            
+2024-12-21 09:44:52 [INFO] Executing Step 2: CodeCleaning
+2024-12-21 09:44:52 [INFO] 
+Code running:
+```
+def get_df():
+    dfs: list[pd.DataFrame] = []
+    for i in range(0, len(df), 2):
+        sub_dfs = [df.iloc[i:i + 2][0]]
+        dfs.append(sub_dfs[0])
+    return pd.concat(dfs).copy()
+
+
+data = {'age': [79.7, 15.7, 89.0], 'crime': [11.48, 22.74, round(float('nan'), 2)], 'zn': ['33.0', '28.0', '17.5']}
+df = pd.DataFrame(data)
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': type(result_dict['value']), 'value': float('nan')}
+        plt.plot([1], [result_dicts['value']])
+    import matplotlib.pyplot as plt
+    return plot
+
+
+plot_result = generate_plot({'type': int(type(df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0])), 'value': round(float('nan'), 2)})
+print('The DataFrame with age > 35 is:')
+if result_dict:
+    print(df.loc[df['age'] > 35])
+else:
+    print('No data to print.')
+df.loc[df['age'] > 35, ['crime', 'zn']] = [round(float(result_dict['value']), 2) for row in result_dict['value'] if isinstance(row, list) and not row[0] == row[1]]
+print(df.loc[df['age'] > 35])
+        ```
+2024-12-21 09:44:52 [ERROR] Failed with error: Traceback (most recent call last):
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 22, in <module>
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'type'
+
+2024-12-21 09:44:52 [WARNING] Failed to execute code retrying with a correction framework [retry number: 3]
+2024-12-21 09:44:52 [INFO] Executing Pipeline: ErrorCorrectionPipeline
+2024-12-21 09:44:52 [INFO] Executing Step 0: ErrorPromptGeneration
+2024-12-21 09:44:52 [INFO] Using prompt: <dataframe>
+dfs[0]:506x14
+crim,zn,indus,chas,nox,rm,age,dis,rad,tax,ptratio,black,lstat,medv
+0.98843,33.0,9.69,1,0.447,6.897,79.7,1.9799,4,430,20.1,370.31,11.48,21.7
+19.6091,28.0,21.89,0,0.415,5.602,15.7,2.3552,5,398,18.2,395.43,22.74,15.0
+0.14866,17.5,5.64,1,0.439,4.628,89.0,4.2392,7,422,22.0,374.71,11.32,7.4
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ return dataframe with age > 35
+
+You generated this python code:
+def get_df():
+    dfs: list[pd.DataFrame] = []
+    for i in range(0, len(df), 2):
+        sub_dfs = [df.iloc[i:i + 2][0]]
+        dfs.append(sub_dfs[0])
+    return pd.concat(dfs).copy()
+
+
+data = {'age': [79.7, 15.7, 89.0], 'crime': [11.48, 22.74, round(float('nan'), 2)], 'zn': ['33.0', '28.0', '17.5']}
+df = pd.DataFrame(data)
+
+
+def generate_plot(result_dict):
+
+    def plot():
+        result_dicts = {'type': type(result_dict['value']), 'value': float('nan')}
+        plt.plot([1], [result_dicts['value']])
+    import matplotlib.pyplot as plt
+    return plot
+
+
+plot_result = generate_plot({'type': int(type(df.loc[df['age'] > 35][['age', 'crime', 'zn']].values[0])), 'value': round(float('nan'), 2)})
+print('The DataFrame with age > 35 is:')
+if result_dict:
+    print(df.loc[df['age'] > 35])
+else:
+    print('No data to print.')
+df.loc[df['age'] > 35, ['crime', 'zn']] = [round(float(result_dict['value']), 2) for row in result_dict['value'] if isinstance(row, list) and not row[0] == row[1]]
+print(df.loc[df['age'] > 35])
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+  File "c:\Users\dbda.STUDENTSDC\AppData\Local\anaconda3\envs\dung\lib\site-packages\pandasai\pipelines\chat\code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 22, in <module>
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'type'
+
+
+Fix the python code above and return the new python code:
+2024-12-21 09:44:52 [INFO] Executing Step 1: CodeGenerator
+2024-12-21 09:46:28 [INFO] HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-21 09:46:28 [ERROR] Pipeline failed on step 1: No code found in the response
+2024-12-21 09:46:28 [ERROR] Pipeline failed on step 6: No code found in the response
+2024-12-21 09:51:36 [INFO] Question: return dataframe with age, nox, zn, crim selected
+2024-12-21 09:51:36 [INFO] Running PandasAI with local LLM...
+2024-12-21 09:51:36 [INFO] Prompt ID: eb608354-1c00-420e-8dd0-21a447a23387
+2024-12-21 09:51:36 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-12-21 09:51:36 [INFO] Executing Step 0: ValidatePipelineInput
+2024-12-21 09:51:36 [INFO] Executing Step 1: CacheLookup
+2024-12-21 09:51:36 [INFO] Executing Step 2: PromptGeneration
+2024-12-21 09:51:36 [INFO] Using prompt: <dataframe>
+dfs[0]:506x14
+crim,zn,indus,chas,nox,rm,age,dis,rad,tax,ptratio,black,lstat,medv
+0.98843,33.0,9.69,1,0.447,6.897,79.7,1.9799,4,430,20.1,370.31,11.48,21.7
+19.6091,28.0,21.89,0,0.415,5.602,15.7,2.3552,5,398,18.2,395.43,22.74,15.0
+0.14866,17.5,5.64,1,0.439,4.628,89.0,4.2392,7,422,22.0,374.71,11.32,7.4
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ return dataframe with age, nox, zn, crim selected
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-12-21 09:51:36 [INFO] Executing Step 3: CodeGenerator
+2024-12-21 09:52:39 [INFO] HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-21 09:52:39 [ERROR] Pipeline failed on step 3: No code found in the response
+2024-12-21 10:04:50 [INFO] Question: Which are the top 5 countries by sales?
+2024-12-21 10:04:50 [INFO] Running PandasAI with local LLM...
+2024-12-21 10:04:50 [INFO] Prompt ID: 19e75cce-abdd-489b-bbef-e4a5381268e8
+2024-12-21 10:04:50 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-12-21 10:04:50 [INFO] Executing Step 0: ValidatePipelineInput
+2024-12-21 10:04:50 [INFO] Executing Step 1: CacheLookup
+2024-12-21 10:04:50 [INFO] Executing Step 2: PromptGeneration
+2024-12-21 10:04:50 [INFO] Using prompt: <dataframe>
+dfs[0]:10x2
+country,sales
+Japan,2300
+United Kingdom,2100
+Spain,3200
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ Which are the top 5 countries by sales?
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-12-21 10:04:50 [INFO] Executing Step 3: CodeGenerator
+2024-12-21 10:05:52 [INFO] HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-21 10:05:52 [ERROR] Pipeline failed on step 3: No code found in the response
