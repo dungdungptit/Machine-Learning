@@ -1,0 +1,674 @@
+<html lang="en" class="dark"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Solving Transformer by Hand: A Step-by-Step Math Example | by Fareed Khan | in Level Up Coding - Freedium</title>
+    
+    <meta name="description" content="Performing numerous matrix multiplications to solve the encoder and decoder parts of the transformer">
+    <meta name="keywords" content="medium, paywall, medium.com, paywall breakthrough">
+
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <!--<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>-->
+
+    <script src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/tailwindcssv3-freedium-hotfix.js"></script>
+
+    <link href="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/unbound.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://freedium.cfd/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://freedium.cfd/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://freedium.cfd/favicon-16x16.png">
+    <link rel="manifest" href="https://freedium.cfd/site.webmanifest">
+    <link rel="mask-icon" href="https://freedium.cfd/safari-pinned-tab.svg" color="#00aba9">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    <script src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/highlight.min.js"></script>
+    
+    <script src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/parent"></script>
+    <script src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/lazyload.min.js"></script>
+    <script src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/lightense.min.js"></script>
+
+    <script>iframeResize({ license: 'GPLv3' })</script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.15 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.bottom-0{bottom:0px}.bottom-4{bottom:1rem}.left-4{left:1rem}.right-0{right:0px}.top-0{top:0px}.top-5{top:1.25rem}.z-20{z-index:20}.m-1\.5{margin:0.375rem}.m-2{margin:0.5rem}.m-auto{margin:auto}.mx-1{margin-left:0.25rem;margin-right:0.25rem}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mr-3{margin-right:0.75rem}.mt-0{margin-top:0px}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-7{margin-top:1.75rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.hidden{display:none}.h-1{height:0.25rem}.h-11{height:2.75rem}.h-3{height:0.75rem}.h-4{height:1rem}.h-40{height:10rem}.h-full{height:100%}.max-h-\[95vh\]{max-height:95vh}.max-h-screen{max-height:100vh}.w-11{width:2.75rem}.w-11\/12{width:91.666667%}.w-3{width:0.75rem}.w-4{width:1rem}.w-60{width:15rem}.w-full{width:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}.list-decimal{list-style-type:decimal}.list-disc{list-style-type:disc}.appearance-none{-webkit-appearance:none;appearance:none}.flex-row{flex-direction:row}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.break-normal{overflow-wrap:normal;word-break:normal}.break-words{overflow-wrap:break-word}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.border{border-width:1px}.border-2{border-width:2px}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-gray-600{--tw-border-opacity:1;border-color:rgb(75 85 99 / var(--tw-border-opacity, 1))}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250 / var(--tw-bg-opacity, 1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-300{--tw-bg-opacity:1;background-color:rgb(209 213 219 / var(--tw-bg-opacity, 1))}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128 / var(--tw-bg-opacity, 1))}.bg-gray-700{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231 / var(--tw-bg-opacity, 1))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94 / var(--tw-bg-opacity, 1))}.bg-red-400{--tw-bg-opacity:1;background-color:rgb(248 113 113 / var(--tw-bg-opacity, 1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-yellow-400{--tw-bg-opacity:1;background-color:rgb(250 204 21 / var(--tw-bg-opacity, 1))}.bg-opacity-50{--tw-bg-opacity:0.5}.bg-cover{background-size:cover}.bg-center{background-position:center}.fill-current{fill:currentColor}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-2{padding-bottom:0.5rem}.pb-3{padding-bottom:0.75rem}.pb-5{padding-bottom:1.25rem}.pl-4{padding-left:1rem}.pl-8{padding-left:2rem}.pr-4{padding-right:1rem}.pt-1{padding-top:0.25rem}.pt-12{padding-top:3rem}.pt-20{padding-top:5rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.font-sans{font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.leading-8{line-height:2rem}.leading-normal{line-height:1.5}.leading-tight{line-height:1.25}.text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-500{--tw-text-opacity:1;color:rgb(234 179 8 / var(--tw-text-opacity, 1))}.no-underline{-webkit-text-decoration-line:none;text-decoration-line:none}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:border-green-500:hover{--tw-border-opacity:1;border-color:rgb(34 197 94 / var(--tw-border-opacity, 1))}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-400:hover{--tw-bg-opacity:1;background-color:rgb(156 163 175 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-600:hover{--tw-bg-opacity:1;background-color:rgb(75 85 99 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.hover\:bg-red-500:hover{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:bg-yellow-500:hover{--tw-bg-opacity:1;background-color:rgb(234 179 8 / var(--tw-bg-opacity, 1))}.hover\:text-gray-900:hover{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:no-underline:hover{-webkit-text-decoration-line:none;text-decoration-line:none}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-blue-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(59 130 246 / var(--tw-ring-opacity, 1))}.dark\:bg-gray-600:is(.dark *){--tw-bg-opacity:1;background-color:rgb(75 85 99 / var(--tw-bg-opacity, 1))}.dark\:bg-gray-800:is(.dark *){--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.dark\:bg-green-700:is(.dark *){--tw-bg-opacity:1;background-color:rgb(21 128 61 / var(--tw-bg-opacity, 1))}.dark\:bg-green-800:is(.dark *){--tw-bg-opacity:1;background-color:rgb(22 101 52 / var(--tw-bg-opacity, 1))}.dark\:text-gray-100:is(.dark *){--tw-text-opacity:1;color:rgb(243 244 246 / var(--tw-text-opacity, 1))}.dark\:text-gray-200:is(.dark *){--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.dark\:text-white:is(.dark *){--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.dark\:text-yellow-400:is(.dark *){--tw-text-opacity:1;color:rgb(250 204 21 / var(--tw-text-opacity, 1))}.dark\:hover\:text-white:hover:is(.dark *){--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}@media (min-width: 768px){.md\:inline{display:inline}.md\:max-w-3xl{max-width:48rem}.md\:max-w-4xl{max-width:56rem}.md\:max-w-xl{max-width:36rem}.md\:px-6{padding-left:1.5rem;padding-right:1.5rem}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-sm{font-size:0.875rem;line-height:1.25rem}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 1024px){.lg\:mt-0{margin-top:0px}.lg\:block{display:block}.lg\:flex{display:flex}.lg\:hidden{display:none}.lg\:w-auto{width:auto}.lg\:items-center{align-items:center}}</style><link rel="stylesheet" href="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/androidstudio.min.css"><style id="lightense-images-css">
+:root {
+  --lightense-z-index: 999999;
+  --lightense-backdrop: var(--bg-color-80, rgba(255, 255, 255, .98));
+  --lightense-duration: 300ms;
+  --lightense-timing-func: cubic-bezier(.2, 0, .1, 1);
+}
+
+.lightense-backdrop {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: calc(var(--lightense-z-index) - 1);
+  padding: 0;
+  margin: 0;
+  transition: opacity var(--lightense-duration) ease;
+  cursor: zoom-out;
+  opacity: 0;
+  background-color: var(--lightense-backdrop);
+  visibility: hidden;
+}
+
+@supports (-webkit-backdrop-filter: blur(30px)) {
+  .lightense-backdrop {
+    background-color: var(--lightense-backdrop);
+    -webkit-backdrop-filter: blur(30px);
+  }
+}
+
+@supports (backdrop-filter: blur(30px)) {
+  .lightense-backdrop {
+    background-color: var(--lightense-backdrop);
+    backdrop-filter: blur(30px);
+  }
+}
+
+.lightense-wrap {
+  position: relative;
+  transition: transform var(--lightense-duration) var(--lightense-timing-func);
+  z-index: var(--lightense-z-index);
+  pointer-events: none;
+}
+
+.lightense-target {
+  cursor: zoom-in;
+  transition: transform var(--lightense-duration) var(--lightense-timing-func);
+  pointer-events: auto;
+}
+
+.lightense-open {
+  cursor: zoom-out;
+}
+
+.lightense-transitioning {
+  pointer-events: none;
+}</style></head>
+<body class="bg-white dark:bg-gray-800"><div class="fixed bottom-4 left-4" style="z-index: 999999;">
+    <button id="openProblemModal" class="m-1.5 flex items-center bg-red-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <style>
+                svg {
+                    fill: #ffffff
+                }
+            </style>
+            <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path>
+        </svg>
+    </button>
+    <button id="darkModeToggle" class="m-1.5 flex items-center bg-blue-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none">
+        <svg id="darkIcon" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+        </svg>
+        <!-- SVG icon for light mode (e.g., a sun) -->
+        <svg class="hidden" id="lightIcon" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+        </svg>
+    </button>
+</div>
+
+<div class="notification-container fixed top-5 p-2 max-h-[95vh] overflow-y-auto hidden" style="z-index: 999999;">
+    <div class="p-5 text-center bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800">
+        <p class="pb-5 text-2xl text-black dark:text-white">Support Freedium</p>
+        <p class="pb-3 text-black dark:text-white">
+            Dear Freedium users,
+            <br>
+            <br>
+            We've updated our donation options to provide you with more 
+ways to support our mission. Your contributions are invaluable in 
+helping us maintain and improve Freedium, ensuring we can continue to 
+provide unrestricted access to quality content.
+            <br>
+            <br>
+            We now offer multiple platforms for donations, including 
+Patreon, Ko-fi, and Liberapay. Each option allows you to support us in 
+the way that's most convenient for you.
+            <br>
+            <br>
+            Your support, no matter the platform or amount, makes a 
+significant difference. It allows us to cover our operational costs and 
+invest in enhancing Freedium's features and reliability.
+            <br>
+            <br>
+            Thank you for being a part of the Freedium community and for your continued support.
+            <br>
+            <br>
+            Choose Your Preferred Donation Platform:
+        </p>
+        <a href="https://patreon.com/Freedium" rel="noreferrer" target="_blank" title="Patreon">
+            <button class="px-2 py-1 mx-1 mt-2 font-semibold text-white bg-red-400 rounded hover:bg-red-500">Patreon</button>
+        </a>
+        <a href="https://ko-fi.com/zhymabekroman" rel="noreferrer" target="_blank" title="Ko-fi">
+            <button class="px-2 py-1 mx-1 mt-2 font-semibold text-white bg-blue-400 rounded hover:bg-blue-500">Ko-fi</button>
+        </a>
+        <a href="https://liberapay.com/ZhymabekRoman/" rel="noreferrer" target="_blank" title="Liberapay">
+            <button class="px-2 py-1 mx-1 mt-2 font-semibold text-white bg-yellow-400 rounded hover:bg-yellow-500">Liberapay</button>
+        </a>
+        <button class="px-2 py-1 mx-1 mt-2 font-semibold text-gray-800 bg-gray-300 rounded hover:bg-gray-400 close-button">Close</button>
+        <a href="https://codeberg.org/Freedium-cfd/web" rel="noreferrer" target="_blank" title="Codeberg">
+            <button class="px-2 py-1 mx-1 mt-2 font-semibold text-white bg-blue-800 rounded hover:bg-blue-900">
+                Source code - Codeberg
+            </button>
+        </a>
+        <a href="https://github.com/Freedium-cfd/web" rel="noreferrer" target="_blank" title="GitHub">
+            <button class="px-2 py-1 mx-1 mt-2 font-semibold text-white bg-gray-700 rounded hover:bg-gray-600">
+                Source code - GitHub
+            </button>
+        </a>
+    </div>
+</div>
+
+<nav id="header" class="fixed top-0 w-full bg-white shadow z-9 dark:bg-gray-800 dark:text-white" style="z-index: 999990;">
+    
+    <div id="progress" class="top-0 z-20 h-1" style="background: linear-gradient(to right, #4dc0b5 var(--scroll), transparent 0); --scroll: Infinity%;"></div>
+    <div class="flex flex-wrap items-center justify-between w-full py-3 mx-auto mt-0 md:max-w-4xl">
+        <div class="pl-4">
+            <a class="text-base text-xl font-extrabold text-green-500 no-underline hover:no-underline" href="https://freedium.cfd/" onclick="navigateToOrigin()">Freedium</a>
+        </div>
+        <div class="block pr-4 lg:hidden">
+            <button id="nav-toggle" class="flex items-center px-3 py-2 text-gray-500 border border-gray-600 rounded appearance-none dark:text-white hover:text-gray-900 dark:hover:text-white hover:border-green-500 focus:outline-none">
+                <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <title>Menu</title>
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="flex-grow hidden w-full mt-2 bg-white lg:flex lg:items-center lg:w-auto lg:block lg:mt-0 dark:bg-gray-800" id="nav-content">
+            <ul class="items-center justify-end flex-1 list-reset lg:flex">
+                <li class="mr-3">
+                    <a class="inline-block text-gray-600 no-underline dark:text-white hover:text-gray-900 dark:hover:text-white hover:text-underline" href="https://ko-fi.com/zhymabekroman" target="_blank">ko-fi</a>
+                </li>
+                <!-- <li class="mr-3">
+                    <a class="inline-block text-gray-600 no-underline dark:text-white hover:text-gray-900 dark:hover:text-white hover:text-underline"
+                        href="https://codeberg.org/Freedium-cfd/web" target="_blank">source code</a>
+                </li>
+                <li class="mr-3">
+                    <a class="inline-block text-gray-600 no-underline dark:text-white hover:text-gray-900 dark:hover:text-white hover:text-underline"
+                        href="https://romans-status-page.vercel.app/status/freedium" target="_blank">status page</a>
+                </li> -->
+                <li class="mr-3">
+                    <a class="inline-block text-gray-600 no-underline dark:text-white hover:text-gray-900 dark:hover:text-white hover:text-underline" href="https://liberapay.com/ZhymabekRoman/" target="_blank" rel="noreferrer">librepay</a>
+                </li>
+                <li class="mr-3">
+                    <a class="inline-block text-gray-600 no-underline dark:text-white hover:text-gray-900 dark:hover:text-white hover:text-underline" href="https://patreon.com/Freedium" target="_blank" rel="noreferrer">patreon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container w-full md:max-w-3xl mx-auto pt-20 break-words text-gray-900 dark:text-gray-200 bg-white dark:bg-gray-800">
+    <div class="w-full px-4 md:px-6 text-xl text-gray-800 dark:text-gray-100 leading-normal" style="font-family:Georgia,serif;">
+        
+        <div class="font-sans">
+            <p class="text-base md:text-sm text-green-500 font-bold pb-3">
+                <a href="https://levelup.gitconnected.com/understanding-transformers-from-start-to-end-a-step-by-step-math-example-16d4e64e6eb1#bypass" class="text-sm md:text-sm text-green-500 font-bold no-underline hover:underline ">&lt; Go to the original</a>
+            </p>
+            
+                <img alt="Preview image" style="max-height: 65vh;
+                            width: auto;
+                            margin: auto" loading="eager" role="presentation" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_99eK1ktrNGPyt4IPowcAgg.png" class="lightense-target">
+            
+            <h1 class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 pt-6 pb-2 text-3xl md:text-4xl">Solving Transformer by Hand: A Step-by-Step Math Example</h1>
+            <h2 class="font-medium font-sans break-normal text-gray-600 dark:text-gray-200 pt-1 text-1xl md:text-1xl">Performing numerous matrix multiplications to solve the encoder and decoder parts of the transformer</h2>
+        </div>
+        <div class="bg-gray-100 dark:bg-gray-600 border border-gray-300 m-2 mt-5">
+            <div class="flex items-center space-x-4 p-4">
+                <div class="flex-shrink-0">
+                    <a href="https://medium.com/@fareedkhandev" target="_blank" title="MSc Data Science, I write on AI and Data Science: https://www.linkedin.com/in/fareed-khan-dev/" class="block relative">
+                        <img src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_3jo9wQSLUiEl2XObs1hfbA.jpg" alt="Fareed Khan" class="rounded-full h-11 w-11 no-lightense">
+                        <div class="absolute bottom-0 right-0 h-3 w-3 border-2 border-white bg-green-500 rounded-full"></div>
+                    </a>
+                </div>
+                <div class="flex-grow">
+                    <a href="https://medium.com/@fareedkhandev" target="_blank" title="MSc Data Science, I write on AI and Data Science: https://www.linkedin.com/in/fareed-khan-dev/" class="block font-semibold text-gray-900 dark:text-white">Fareed Khan</a>
+                    <button class="text-sm text-white bg-green-500 px-3 py-1 rounded-lg mt-1 dark:bg-green-700">
+                        <a href="https://medium.com/@fareedkhandev" target="_blank" title="MSc Data Science, I write on AI and Data Science: https://www.linkedin.com/in/fareed-khan-dev/" class="block text-sm text-white">Follow</a>
+                    </button>
+                </div>
+            </div>
+            <div class="px-4 pb-2">
+                <div class="flex flex-wrap items-center space-x-2 text-sm text-gray-500 dark:text-white">
+                    
+                        <a href="https://medium.com/gitconnected" title="Coding tutorials and news." target="_blank" class="flex items-center space-x-1">
+                            <img src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_5D9oYBd58pyjMkV_5-zXXQ.jpg" alt="Level Up Coding" class="h-4 w-4 rounded-full no-lightense">
+                            <p>Level Up Coding</p>
+                        </a>
+                        <span>androidstudio</span>
+                    
+                    <span class="text-gray-500 dark:text-white">~13 min read</span>
+                    <span class="md:inline">·</span>
+                    <span class="text-gray-500 dark:text-white">December 18, 2023 (Updated: December 21, 2023)</span>
+                    <span class="md:inline">·</span>
+                    <span class="text-yellow-500 dark:text-yellow-400">Free: Yes</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content mt-8">
+            <p class="leading-8 mt-3">I have already written a detailed 
+blog on how transformers work using a very small sample of the dataset, 
+which will be my best blog ever because it has elevated my profile and 
+given me the motivation to write more. However, that blog is incomplete 
+as it only covers <strong>20% of the transformer architecture</strong> 
+and contains numerous calculation errors, as pointed out by readers. 
+After a considerable amount of time has passed since that blog, I will 
+be revisiting the topic in this new blog.</p><p class="leading-8 mt-7">My previous blog on transformer architecture (<strong>covers only 20%</strong>):</p><div class="items-center p-2 overflow-hidden border border-gray-300 mt-7"><a rel="noopener follow" href="https://medium.com/@fareedkhandev/understanding-transformers-a-step-by-step-math-example-part-1-a7809015150a" target="_blank"> <div class="flex flex-row justify-between p-2 overflow-hidden"><div class="flex flex-col justify-center p-2"><h2 class="text-base font-bold text-black dark:text-gray-100">Understanding Transformers: A Step-by-Step Math Example — Part 1</h2><div class="block mt-2"><h3 class="text-sm text-grey-darker">I understand that the transformer architecture may seem scary, and you might have encountered various explanations on…</h3></div><div class="mt-5"><p class="text-xs text-grey-darker">medium.com</p></div></div><div class="relative flex h-40 flew-row w-60"><div class="absolute inset-0 bg-center bg-cover lazy entered loaded" data-bg="https://miro.medium.com/v2/resize:fit:320/1*GDw2D2dQ3r2uyqMYCig1CA.png" data-ll-status="loaded" style="background-image: url(&quot;https://miro.medium.com/v2/resize:fit:320/1*GDw2D2dQ3r2uyqMYCig1CA.png&quot;);"></div></div></div> </a></div><p class="leading-8 mt-7">I plan to explain the transformer again in the same manner as I did in my previous blog <strong>(for both coders and non-coders)</strong>, providing a complete guide with a step-by-step approach to understanding how they work.</p><h3 id="e757" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Table of Contents</h3><ul class="pl-8 mt-2 list-disc"><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 1 — Defining our&nbsp;Dataset" href="#e273" target="">Defining our Dataset</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 2— Finding Vocab&nbsp;Size" href="#ba43" target="">Finding Vocab Size</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 3 — Encoding" href="#620c" target="">Encoding</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 4 — Calculating Embedding" href="#ca82" target="">Calculating Embedding</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 5 — Calculating Positional Embedding" href="#e6c4" target="">Calculating Positional Embedding</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 6 — Concatenating Positional and Word Embeddings" href="#8dc4" target="">Concatenating Positional and Word Embeddings</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 7 — Multi Head Attention" href="#3316" target="">Multi Head Attention</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 8 — Adding and Normalizing" href="#4657" target="">Adding and Normalizing</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 9 — Feed Forward&nbsp;Network" href="#aea8" target="">Feed Forward Network</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 10 — Adding and Normalizing Again" href="#7c26" target="">Adding and Normalizing Again</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 11 — Decoder&nbsp;Part" href="#7726" target="">Decoder Part</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 12 — Understanding Mask Multi Head Attention" href="#5906" target="">Understanding Mask Multi Head Attention</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Step 13 — Calculating the Predicted Word" href="#9d3f" target="">Calculating the Predicted Word</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Important Points" href="#4b2e" target="">Important Points</a></li><li class="mt-3"><a style="text-decoration: underline;" rel="" title="Conclusion" href="#6872" target="">Conclusion</a></li></ul><h3 id="e273" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 1 — Defining our Dataset</h3><p class="leading-8 mt-3">The dataset used for creating ChatGPT is <strong>570 GB.</strong> On the other hand, for our purposes, we will be using a very small dataset to perform numerical calculations visually.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*PXhg5aLIuJiFDaR6NsVFew.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Our entire dataset containing only three sentences</figcaption><p class="leading-8 mt-7">Our
+ entire dataset contains only three sentences, all of which are 
+dialogues taken from a TV show. Although our dataset is cleaned, in 
+real-world scenarios like ChatGPT creation, cleaning a 570 GB dataset 
+requires a significant amount of effort.</p><h3 id="ba43" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 2— Finding Vocab Size</h3><p class="leading-8 mt-3">The vocabulary size determines the total number of <strong>unique words</strong> in our dataset. It can be calculated using the below formula, where <strong>N</strong> is the total number of words in our dataset.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*LYkmmxuX6sRGhPHL1f5Y1g.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_LYkmmxuX6sRGhPHL1f5Y1g.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">vocab_size formula where N is total number of words</figcaption><p class="leading-8 mt-7">In order to find N, we need to break our dataset into individual words.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*mVHFT-0cL-8KnDvLMNpOJA.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_mVHFT-0cL-8KnDvLMNpOJA.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">calculating variable <strong>N</strong></figcaption><p class="leading-8 mt-7">After
+ obtaining N, we perform a set operation to remove duplicates, and then 
+we can count the unique words to determine the vocabulary size.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*ob8UfKnG4pSDwKPluCXZjg.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_ob8UfKnG4pSDwKPluCXZjg.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">finding vocab size</figcaption><p class="leading-8 mt-7">Therefore, the vocabulary size is <strong>23</strong>, as there are <strong>23</strong> unique words in our dataset.</p><h3 id="620c" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 3 — Encoding</h3><p class="leading-8 mt-3">Now, we need to assign a unique number to each unique word.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*2v7umtKxna92ypxPGTJMEw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_2v7umtKxna92ypxPGTJMEw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">encoding our unique words</figcaption><p class="leading-8 mt-7">As
+ we have considered a single token as a single word and assigned a 
+number to it, ChatGPT has considered a portion of a word as a single 
+token using this formula: <code class="p-1.5 bg-gray-300 dark:bg-gray-600">1 Token = 0.75 Word</code></p><p class="leading-8 mt-7">After encoding our entire dataset, it's time to select our input and start working with the transformer architecture.</p><h3 id="ca82" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 4 — Calculating Embedding</h3><p class="leading-8 mt-3">Let's select a sentence from our corpus that will be processed in our transformer architecture.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*ojmh3_rU8Z4PtjGfGMXHfQ.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_ojmh3_rU8Z4PtjGfGMXHfQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Input sentence for transformer</figcaption><p class="leading-8 mt-7">We have selected our input, and we need to find an embedding vector for it. The original paper uses a <strong>512-dimensional embedding vector</strong> for each input word.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*K9NvPV-9SDHYiyPLfFOYGA.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_K9NvPV-9SDHYiyPLfFOYGA.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Original Paper uses 512 dimension vector</figcaption><p class="leading-8 mt-7">Since,
+ for our case, we need to work with a smaller dimension of embedding 
+vector to visualize how the calculation is taking place. So, we will be 
+using a dimension of <code class="p-1.5 bg-gray-300 dark:bg-gray-600">6</code> for the embedding vector.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*G7Ggd7nEN856_zbuYZZoLw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_G7Ggd7nEN856_zbuYZZoLw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Embedding vectors of our input</figcaption><p class="leading-8 mt-7">These
+ values of the embedding vector are between 0 and 1 and are filled 
+randomly in the beginning. They will later be updated as our transformer
+ starts understanding the meanings among the words.</p><h3 id="e6c4" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 5 — Calculating Positional Embedding</h3><p class="leading-8 mt-3">Now
+ we need to find positional embeddings for our input. There are two 
+formulas for positional embedding depending on the position of the ith 
+value of that embedding vector for each word.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*8r-S_gfexMsy19ppBX12ag.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_8r-S_gfexMsy19ppBX12ag.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Positional Embedding formula</figcaption><p class="leading-8 mt-7">As you do know, our input sentence is <strong>"when you play the game of thrones"</strong> and the starting word is <strong>"when" </strong>with a starting index (POS) value is <code class="p-1.5 bg-gray-300 dark:bg-gray-600">0</code>, having a dimension (d) of <code class="p-1.5 bg-gray-300 dark:bg-gray-600">6</code>. For <code class="p-1.5 bg-gray-300 dark:bg-gray-600">i</code> from <code class="p-1.5 bg-gray-300 dark:bg-gray-600">0 to 5</code>, we calculate the positional embedding for our first word of the input sentence.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*3kz44sGfStozgw_2aBIWjw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_3kz44sGfStozgw_2aBIWjw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Positional Embedding for word: <strong>When</strong></figcaption><p class="leading-8 mt-7">Similarly, we can calculate positional embedding for all the words in our input sentence.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*Zyh9367itZlPnEZLqzv4fQ.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_Zyh9367itZlPnEZLqzv4fQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Calculating Positional Embeddings of our input <strong>(The calculated values are rounded)</strong></figcaption><h3 id="8dc4" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 6 — Concatenating Positional and Word Embeddings</h3><p class="leading-8 mt-3">After calculating positional embedding, we need to add word embeddings and positional embeddings.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*-Canm4KHuFzuXePmsC4ZJw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">concatenation step</figcaption><p class="leading-8 mt-7">This resultant matrix from combining both matrices (<strong>Word embedding matrix </strong>and<strong> positional embedding matrix</strong>) will be considered as an input to the encoder part.</p><h3 id="3316" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 7 — Multi Head Attention</h3><p class="leading-8 mt-3">A
+ multi-head attention is comprised of many single-head attentions. It is
+ up to us how many single heads we need to combine. For example, LLaMA 
+LLM from Meta has used 32 single heads in the encoder architecture. 
+Below is the illustrated diagram of how a single-head attention looks 
+like.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*lB_CQAexlaU02D_dKF6XYQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Single Head attention in Transformer</figcaption><p class="leading-8 mt-7">There are three inputs: <strong>query</strong>, <strong>key</strong>, and <strong>value</strong>. Each of these matrices is obtained by multiplying a different set of weights matrix from the <strong>Transpose </strong>of same matrix that we computed earlier by adding the word embedding and positional embedding matrix.</p><p class="leading-8 mt-7">Let's
+ say, for computing the query matrix, the set of weights matrix must 
+have the number of rows the same as the number of columns of the 
+transpose matrix, while the columns of the weights matrix can be any; 
+for example, we suppose <code class="p-1.5 bg-gray-300 dark:bg-gray-600">4</code> columns in our weights matrix. The values in the weights matrix are between <code class="p-1.5 bg-gray-300 dark:bg-gray-600">0 and 1</code> randomly, which will later be updated when our transformer starts learning the meaning of these words.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*E5whYIoC5RF3iHQkX_yTUw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_E5whYIoC5RF3iHQkX_yTUw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">calculating Query matrix</figcaption><p class="leading-8 mt-7">Similarly, we can compute the <strong>key</strong> and <strong>value</strong> matrices using the same procedure, but the values in the weights matrix must be different for both.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*chYDhzxZy0j8WPZH7eaZIw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Calculating Key and Value Matrices</figcaption><p class="leading-8 mt-7">So, after multiplying matrices, the resultant <strong>query</strong>, <strong>key</strong>, and <strong>values</strong> are obtained:</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*dLl9JhTHacmBDRKFGXNPlg.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_dLl9JhTHacmBDRKFGXNPlg.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Query, Key, Value matrices</figcaption><p class="leading-8 mt-7">Now that we have all three matrices, let's start calculating single-head attention step by step.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*JuaC84jFOHHTke7jwRGUiw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_JuaC84jFOHHTke7jwRGUiw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">matrix multiplication between Query and Key</figcaption><p class="leading-8 mt-7">For scaling the resultant matrix, we have to reuse the dimension of our embedding vector, which is <code class="p-1.5 bg-gray-300 dark:bg-gray-600">6</code>.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*Sd8OyZr_nQjT_FqeTM3q3g.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">scaling the resultant matrix with dimension <strong>5</strong></figcaption><p class="leading-8 mt-7">The next step of <strong>masking</strong> <strong>is</strong> <strong>optional</strong>,
+ and we won't be calculating it. Masking is like telling the model to 
+focus only on what's happened before a certain point and not peek into 
+the future while figuring out the importance of different words in a 
+sentence. It helps the model understand things in a step-by-step manner,
+ without cheating by looking ahead.</p><p class="leading-8 mt-7">So now we will be applying the <strong>softmax</strong> operation on our scaled resultant matrix.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*doJ5FUYSj21RtVXIAnrtmw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_doJ5FUYSj21RtVXIAnrtmw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Applying softmax on resultant matrix</figcaption><p class="leading-8 mt-7">Doing the final multiplication step to obtain the resultant matrix from single-head attention.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*gyLQkyFnQ_zlrj84I9IIFQ.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_gyLQkyFnQ_zlrj84I9IIFQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">calculating the final matrix of single head attention</figcaption><p class="leading-8 mt-7">We
+ have calculated single-head attention, while multi-head attention 
+comprises many single-head attentions, as I stated earlier. Below is a 
+visual of how it looks like:</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*YwdVB4szxRw0aUQ0SR784A.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_YwdVB4szxRw0aUQ0SR784A.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Multi Head attention in Transformer</figcaption><p class="leading-8 mt-7">Each single-head attention has three inputs: <strong>query</strong>, <strong>key</strong>, and <strong>value</strong>,
+ and each three have a different set of weights. Once all single-head 
+attentions output their resultant matrices, they will all be 
+concatenated, and the final concatenated matrix is once again 
+transformed linearly by multiplying it with a set of weights matrix 
+initialized with random values, which will later get updated when the 
+transformer starts training.</p><p class="leading-8 mt-7">Since, in our 
+case, we are considering a single-head attention, but this is how it 
+looks if we are working with multi-head attention.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*J-gusetW_fuJXgAj9X8quQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Single Head attention vs Multi Head attention</figcaption><p class="leading-8 mt-7">In
+ either case, whether it's single-head or multi-head attention, the 
+resultant matrix needs to be once again transformed linearly by 
+multiplying a set of weights matrix.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*vMfGtR78ZkBfQ90xzl4WKw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_vMfGtR78ZkBfQ90xzl4WKw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">normalizing single head attention matrix</figcaption><p class="leading-8 mt-7">Make sure the linear set of weights matrix number of columns must be equal to the matrix that we computed earlier (<strong>word embedding + positional embedding</strong>) matrix number of columns, because the next step, we will be adding the resultant normalized matrix with (<strong>word embedding + positional embedding</strong>) matrix.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*nUkMToeFhWuIkZ56h9altQ.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_nUkMToeFhWuIkZ56h9altQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Output matrix of multi head attention</figcaption><p class="leading-8 mt-7">As we have computed the resultant matrix for multi-head attention, next, we will be working on adding and normalizing step.</p><h3 id="4657" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 8 — Adding and Normalizing</h3><p class="leading-8 mt-3">Once we obtain the resultant matrix from multi-head attention, we have to add it to our original matrix. Let's do it first.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*KNpA-drhNtO1MBeFeGyolA.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_KNpA-drhNtO1MBeFeGyolA.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Adding matrices to perform add and norm step</figcaption><p class="leading-8 mt-7">To normalize the above matrix, we need to compute the mean and standard deviation row-wise for each row.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*_wrRKKRM7EXVY8eLZLyNwQ.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1__wrRKKRM7EXVY8eLZLyNwQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">calculating meand and std.</figcaption><p class="leading-8 mt-7">we subtract each value of the matrix by the corresponding row mean and divide it by the corresponding standard deviation.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*-ixsgxBG9mv4dg4LJwOj9Q.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_-ixsgxBG9mv4dg4LJwOj9Q.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">normalizing the resultant matrix</figcaption><p class="leading-8 mt-7">Adding a small value of error prevents the denominator from being zero and avoids making the entire term infinity.</p><h3 id="aea8" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 9 — Feed Forward Network</h3><p class="leading-8 mt-3">After
+ normalizing the matrix, it will be processed through a feedforward 
+network. We will be using a very basic network that contains only one 
+linear layer and one ReLU activation function layer. This is how it 
+looks like visually:</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*rdYzrzqaH30naDV427k3dA.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_rdYzrzqaH30naDV427k3dA.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Feed Forward network comparison</figcaption><p class="leading-8 mt-7">First,
+ we need to calculate the linear layer by multiplying our last 
+calculated matrix with a random set of weights matrix, which will be 
+updated when the transformer starts learning, and adding the resultant 
+matrix to a bias matrix that also contains random values.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*NDFTk3rHug9dKbmuHgT47g.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_NDFTk3rHug9dKbmuHgT47g.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Calculating Linear Layer</figcaption><p class="leading-8 mt-7">After calculating the linear layer, we need to pass it through the ReLU layer and use its formula.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*1v8ozoEMHhNRf1NhFTSblQ.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_1v8ozoEMHhNRf1NhFTSblQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Calculating ReLU Layer</figcaption><h3 id="7c26" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 10 — Adding and Normalizing Again</h3><p class="leading-8 mt-3">Once
+ we obtain the resultant matrix from feed forward network, we have to 
+add it to the matrix that is obtained from previous add and norm step, 
+and then normalizing it using the row wise mean and standard deviation.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*Wa95_yn9E8I5h0NHiWiipw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Add and Norm after Feed Forward Network</figcaption><p class="leading-8 mt-7">The
+ output matrix of this add and norm step will serve as the query and key
+ matrix in one of the multi-head attention mechanisms present in the 
+decoder part, which you can easily understand by tracing outward from 
+the add and norm to the decoder section.</p><h3 id="7726" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 11 — Decoder Part</h3><p class="leading-8 mt-3">The good news is that up until now, we have calculated <strong>Encoder part</strong>,<strong> </strong>all
+ the steps that we have performed, from encoding our dataset to passing 
+our matrix through the feedforward network, are unique. It means we 
+haven't calculated them before. But from now on, all the upcoming steps 
+that is the remaining architecture of the transformer (<strong>Decoder part</strong>) are going to involve similar kinds of matrix multiplications.</p><p class="leading-8 mt-7">Take a look at our transformer architecture. What we have covered so far and what we have to cover yet:</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*na7DVUsXIObNwjqsjvAKJA.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_na7DVUsXIObNwjqsjvAKJA.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Upcoming steps illustration</figcaption><p class="leading-8 mt-7">We
+ won't be calculating the entire decoder because most of its portion 
+contains similar calculations to what we have already done in the 
+encoder. Calculating the decoder in detail would only make the blog 
+lengthy due to repetitive steps. Instead, we only need to focus on the 
+calculations of the input and output of the decoder.</p><p class="leading-8 mt-7">When
+ training, there are two inputs to the decoder. One is from the encoder,
+ where the output matrix of the last add and norm layer serves as the <strong>query</strong> and <strong>key</strong> for the second multi-head attention layer in the decoder part. Below is the visualization of it (from <strong><a style="text-decoration: underline;" rel="" title="" href="https://www.youtube.com/watch?v=gJ9kaJsE78k&amp;t=596s" target="_blank">batool haider</a></strong>):</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/0*1_Zhg960nRqy9MIF.gif" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/0_1_Zhg960nRqy9MIF.gif"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Visualization is from <strong><a style="text-decoration: underline;" rel="" title="" href="https://www.youtube.com/watch?v=gJ9kaJsE78k&amp;t=596s" target="_blank">Batool Haider</a></strong></figcaption><p class="leading-8 mt-7">While the value matrix comes from the decoder after the first <strong>add and norm </strong>step.</p><p class="leading-8 mt-7">The second input to the decoder is the predicted text. If you remember, our input to the encoder is <code class="p-1.5 bg-gray-300 dark:bg-gray-600">when you play game of thrones</code> so the input to the decoder is the predicted text, which in our case is <code class="p-1.5 bg-gray-300 dark:bg-gray-600">you win or you die</code> .</p><p class="leading-8 mt-7">But
+ the predicted input text needs to follow a standard wrapping of tokens 
+that make the transformer aware of where to start and where to end.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*ad4SiZiYUxMKQu8SBe6a2g.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">input comparison of encoder and decoder</figcaption><p class="leading-8 mt-7">Where <code class="p-1.5 bg-gray-300 dark:bg-gray-600">&lt;start&gt;</code> and <code class="p-1.5 bg-gray-300 dark:bg-gray-600">&lt;end&gt;</code> are two new tokens being introduced. Moreover, the decoder takes one token as an input at a time. It means that <code class="p-1.5 bg-gray-300 dark:bg-gray-600">&lt;start&gt;</code> will be served as an input, and <code class="p-1.5 bg-gray-300 dark:bg-gray-600">you</code> must be the predicted text for it.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*NcEJ0iDgKI77inXCybyR9Q.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Decoder input <strong>&lt;start&gt; </strong>word</figcaption><p class="leading-8 mt-7">As we already know, these embeddings are filled with random values, which will later be updated during the training process.</p><p class="leading-8 mt-7">Compute rest of the blocks in the same way that we computed earlier in the encoder part.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*h3CQNwApHPGicChhdoBB_A.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_h3CQNwApHPGicChhdoBB_A.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Calculating Decoder</figcaption><p class="leading-8 mt-7">Before
+ diving into any further details, we need to understand what masked 
+multi-head attention is, using a simple mathematical example.</p><h3 id="5906" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 12 — Understanding Mask Multi Head Attention</h3><p class="leading-8 mt-3">In
+ a Transformer, the masked multi-head attention is like a spotlight that
+ a model uses to focus on different parts of a sentence. It's special 
+because it doesn't let the model cheat by looking at words that come 
+later in the sentence. This helps the model understand and generate 
+sentences step by step, which is important in tasks like talking or 
+translating words into another language.</p><p class="leading-8 mt-7">Suppose
+ we have the following input matrix, where each row represents a 
+position in the sequence, and each column represents a feature:</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*sTqKpYV2bIzuobu9svkuWw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_sTqKpYV2bIzuobu9svkuWw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">inpur matrix for masked multi head attentions</figcaption><p class="leading-8 mt-7">Now, let's understand the masked multi-head attention components having two heads:</p><ol class="pl-8 mt-2 list-decimal"><li class="mt-3"><strong>Linear Projections (Query, Key, Value): </strong>Assume the linear projections for each head: <strong>Head 1: </strong><em><strong>Wq</strong></em><strong>1​,</strong><em><strong>Wk</strong></em><strong>1​,</strong><em><strong>Wv</strong></em><strong>1</strong>​ and <strong>Head 2: </strong><em><strong>Wq</strong></em><strong>2​,</strong><em><strong>Wk</strong></em><strong>2​,</strong><em><strong>Wv</strong></em><strong>2</strong>​</li><li class="mt-3"><strong>Calculate Attention Scores: </strong>For
+ each head, calculate attention scores using the dot product of Query 
+and Key, and apply the mask to prevent attending to future positions.</li><li class="mt-3"><strong>Apply Softmax: </strong>Apply the softmax function to obtain attention weights.</li><li class="mt-3"><strong>Weighted Summation (Value): </strong>Multiply the attention weights by the Value to get the weighted sum for each head.</li><li class="mt-3"><strong>Concatenate and Linear Transformation: </strong>Concatenate the outputs from both heads and apply a linear transformation.</li></ol><h4 id="c6bb" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-l md:text-xl pt-8">Let's do a simplified calculation:</h4><p class="leading-8 mt-3">Assuming two conditions</p><ul class="pl-8 mt-2 list-disc"><li class="mt-3"><em><strong>Wq</strong></em><strong>1​ = </strong><em><strong>Wk</strong></em><strong>1 ​= </strong><em><strong>Wv</strong></em><strong>1 ​= </strong><em><strong>Wq</strong></em><strong>2​ = </strong><em><strong>Wk</strong></em><strong>2 ​= </strong><em><strong>Wv</strong></em><strong>2​ = </strong><em><strong>I</strong></em>, the identity matrix.</li><li class="mt-3"><em><strong>Q</strong></em><strong>=</strong><em><strong>K</strong></em><strong>=</strong><em><strong>V</strong></em><strong>=Input Matrix</strong></li></ul><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered exited" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*h0Sqeddff4_Xd7I6UU-TrQ.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Mask Multi Head Attention (<strong>Two Heads</strong>)</figcaption><p class="leading-8 mt-7">The
+ concatenation step combines the outputs from the two attention heads 
+into a single set of information. Imagine you have two friends who each 
+give you advice on a problem. Concatenating their advice means putting 
+both pieces of advice together so that you have a more complete view of 
+what they suggest. In the context of the transformer model, this step 
+helps capture different aspects of the input data from multiple 
+perspectives, contributing to a richer representation that the model can
+ use for further processing.</p><h3 id="9d3f" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Step 13 — Calculating the Predicted Word</h3><p class="leading-8 mt-3">The
+ output matrix of the last add and norm block of the decoder must 
+contain the same number of rows as the input matrix, while the number of
+ columns can be any. Here, we work with <code class="p-1.5 bg-gray-300 dark:bg-gray-600">6</code>.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*5iOM08PiTouFxxm87Layww.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_5iOM08PiTouFxxm87Layww.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Add and Norm output of decoder</figcaption><p class="leading-8 mt-7">The last <strong>add and norm block</strong>
+ resultant matrix of the decoder must be flattened in order to match it 
+with a linear layer to find the predicted probability of each unique 
+word in our dataset (corpus).</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*feNuBhdViJo_41qC9vey8Q.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_feNuBhdViJo_41qC9vey8Q.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">flattened the last add and norm block matrix</figcaption><p class="leading-8 mt-7">This flattened layer will be passed through a linear layer to compute the <strong>logits</strong> (scores) of each unique word in our dataset.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*BK_iGry8sF9XehIGxZtkLw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_BK_iGry8sF9XehIGxZtkLw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Calculating Logits</figcaption><p class="leading-8 mt-7">Once we obtain the logits, we can use the <strong>softmax</strong> function to normalize them and find the word that contains the highest probability.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*BGmRI8tL1a6olqIaRkqNbw.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_BGmRI8tL1a6olqIaRkqNbw.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Finding the Predicted word</figcaption><p class="leading-8 mt-7">So based on our calculations, the predicted word from the decoder is <code class="p-1.5 bg-gray-300 dark:bg-gray-600">you</code>.</p><div class="mt-7"><img alt="None" class="pt-5 m-auto lazy entered loaded lightense-target" role="presentation" data-src="https://miro.medium.com/v2/resize:fit:700/1*MRYreFD9RrT3KyQ7R-ww2A.png" data-ll-status="loaded" src="Solving%20Transformer%20by%20Hand_%20A%20Step-by-Step%20Math%20Example%20_%20by%20Fareed%20Khan%20_%20in%20Level%20Up%20Coding%20-%20Freedium_files/1_MRYreFD9RrT3KyQ7R-ww2A.png"></div><figcaption class="mt-3 text-sm text-center text-gray-500 dark:text-gray-200">Final output of decoder</figcaption><p class="leading-8 mt-7">This predicted word <code class="p-1.5 bg-gray-300 dark:bg-gray-600">you</code>, will be treated as the input word for the decoder, and this process continues until the <code class="p-1.5 bg-gray-300 dark:bg-gray-600">&lt;end&gt;</code> token is predicted.</p><h3 id="4b2e" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Important Points</h3><ol class="pl-8 mt-2 list-decimal"><li class="mt-3">The
+ above example is very simple, as it does not involve epochs or any 
+other important parameters that can only be visualized using a 
+programming language like Python.</li><li class="mt-3">It has shown the process only until training, while evaluation or testing cannot be visually seen using this matrix approach.</li><li class="mt-3">Masked
+ multi-head attentions can be used to prevent the transformer from 
+looking at the future, helping to avoid overfitting your model.</li></ol><h3 id="6872" class="font-bold font-sans break-normal text-gray-900 dark:text-gray-100 text-1xl md:text-2xl pt-12">Conclusion</h3><p class="leading-8 mt-3">In
+ this blog, I have shown you a very basic way of how transformers 
+mathematically work using matrix approaches. We have applied positional 
+encoding, softmax, feedforward network, and most importantly, multi-head
+ attention.</p><p class="leading-8 mt-7">In the future, I will be 
+posting more blogs on transformers and LLM as my core focus is on NLP. 
+More importantly, if you want to build your own million-parameter LLM 
+from scratch using Python, I have written a blog on it which has 
+received a lot of appreciation on Medium. You can read it here:</p><div class="items-center p-2 overflow-hidden border border-gray-300 mt-7"><a rel="noopener follow" href="https://levelup.gitconnected.com/building-a-million-parameter-llm-from-scratch-using-python-f612398f06c2" target="_blank"> <div class="flex flex-row justify-between p-2 overflow-hidden"><div class="flex flex-col justify-center p-2"><h2 class="text-base font-bold text-black dark:text-gray-100">Building a Million-Parameter LLM from Scratch Using Python</h2><div class="block mt-2"><h3 class="text-sm text-grey-darker">A Step-by-Step Guide to Replicating LLaMA Architecture</h3></div><div class="mt-5"><p class="text-xs text-grey-darker">gitconnected.com</p></div></div><div class="relative flex h-40 flew-row w-60"><div class="absolute inset-0 bg-center bg-cover lazy entered loaded" data-bg="https://miro.medium.com/v2/resize:fit:320/1*ox3hToPFUWxAwURxYEXiGg.jpeg" data-ll-status="loaded" style="background-image: url(&quot;https://miro.medium.com/v2/resize:fit:320/1*ox3hToPFUWxAwURxYEXiGg.jpeg&quot;);"></div></div></div> </a></div><p class="leading-8 mt-7"><strong>Have a great time reading!</strong></p>
+        </div>
+        <div class="flex flex-wrap gap-2 mt-5">
+            <a title="Data Science" target="_blank" href="https://medium.com/tag/data-science"><span class="text-green-500 bg-green-100 px-2 py-1 rounded-full text-xs dark:bg-green-800 dark:text-gray-100">#data-science</span></a><a title="Artificial Intelligence" target="_blank" href="https://medium.com/tag/artificial-intelligence"><span class="text-green-500 bg-green-100 px-2 py-1 rounded-full text-xs dark:bg-green-800 dark:text-gray-100">#artificial-intelligence</span></a><a title="Machine Learning" target="_blank" href="https://medium.com/tag/machine-learning"><span class="text-green-500 bg-green-100 px-2 py-1 rounded-full text-xs dark:bg-green-800 dark:text-gray-100">#machine-learning</span></a><a title="Python" target="_blank" href="https://medium.com/tag/python"><span class="text-green-500 bg-green-100 px-2 py-1 rounded-full text-xs dark:bg-green-800 dark:text-gray-100">#python</span></a><a title="Deep Learning" target="_blank" href="https://medium.com/tag/deep-learning"><span class="text-green-500 bg-green-100 px-2 py-1 rounded-full text-xs dark:bg-green-800 dark:text-gray-100">#deep-learning</span></a>
+        </div>
+        <div class="container w-full md:max-w-3xl mx-auto pt-12"></div>
+    </div>
+    <style>
+.main-content {
+ letter-spacing: -0.06px;
+ font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+pre {
+    font-size: 75%;
+    background-color: #e3e2e2;
+}
+p code, ul code, li code {
+    font-size: 75%;
+}
+    </style>
+    <script>
+document.addEventListener('DOMContentLoaded', (event) => {
+  hljs.highlightAll();
+
+  document.querySelectorAll('pre code').forEach((el) => {
+        code = el.textContent;
+        el = el.parentElement;
+        el.innerHTML = '<button class="hljs-copy p-1 bg-gray-300 dark:bg-zinc-800">Copy</button>' + el.innerHTML; // append copy button
+        el.getElementsByClassName('hljs-copy')[0].contentCopy = code;
+         el.getElementsByClassName('hljs-copy')[0].addEventListener("click", function () {
+             this.innerText = 'Copying..';
+             if (!navigator.userAgent.toLowerCase().includes('safari')) {
+                 navigator.clipboard.writeText(this.contentCopy);
+             } else {
+                 prompt("Clipboard (Select: ⌘+a > Copy:⌘+c)", this.contentCopy);
+             }
+             this.innerText = 'Copied!';
+             button = this;
+             setTimeout(function () {
+                 button.innerText = 'Copy';
+             }, 1500)
+         });
+});
+  });
+    </script>
+    <style>
+     .hljs-copy {
+         float: right;
+         cursor: pointer;
+     }
+    </style>
+<div id="problemModal" class="fixed inset-0 flex items-center justify-center hidden w-full h-full overflow-y-auto bg-black bg-opacity-50 modal" style="z-index: 999999">
+    <div class="w-11/12 max-h-screen mx-auto rounded shadow-lg modal-container md:max-w-xl">
+        <div class="px-6 py-4 my-8 text-left text-black bg-white modal-content dark:bg-gray-800 dark:text-white">
+            <h1 class="text-3xl font-bold">Reporting a Problem</h1>
+            <div class="mt-3">
+                <p>
+                    Sometimes we have problems displaying some Medium posts.
+                    <br>
+                    <br>
+                </p>
+                <p>If you have a problem that some images aren't loading - try using VPN. Probably you have problem with
+                    access to Medium CDN (or fucking Cloudflare's bot detection algorithms are blocking you).</p>
+            </div>
+            <form action="#" method="POST" class="mt-4" id="problem-form">
+                <div class="mb-4">
+                    <label for="problem-description" class="block mb-2 font-bold text-gray-700 dark:text-white">Problem
+                        Description</label>
+                    <textarea id="problem-description" name="problem-description" placeholder="Describe your problem here..." class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" rows="4" required=""></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="px-4 py-2 m-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline">Submit</button>
+                    <button type="button" class="px-4 py-2 m-2 font-bold text-white bg-gray-500 rounded modal-close hover:bg-gray-700 focus:outline-none focus:shadow-outline">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+    }
+
+    function changeTheme(themeName) {
+        // Source: https://stackoverflow.com/questions/59257368/how-to-dynamically-change-the-theme-using-highlight-js
+        console.log(`Applying theme: ${themeName}`);
+        const existingLink = document.querySelector('link[href*="highlight.js"]');
+        if (existingLink) {
+            existingLink.remove();
+        }
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeName}.min.css`;
+        document.head.appendChild(link);
+        document.querySelector("span").textContent = themeName;
+    }
+
+    function navigateToOrigin() {
+        window.location.href = window.location.origin;
+    }
+
+    function updateThemeIcons() {
+        const isDarkMode = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.getElementById('darkIcon').classList.toggle('hidden', !isDarkMode);
+        document.getElementById('lightIcon').classList.toggle('hidden', isDarkMode);
+    }
+
+    updateThemeIcons();
+
+    document.getElementById('darkModeToggle').addEventListener('click', function () {
+        const isDarkMode = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (isDarkMode) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.cssText = "--lightense-backdrop: white;";
+            localStorage.setItem("theme", "light");
+            changeTheme("a11y-light");
+        } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.cssText = "--lightense-backdrop: black;";
+            localStorage.setItem("theme", "dark");
+            changeTheme("androidstudio");
+        }
+        updateThemeIcons();
+    })
+
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        //document.getElementById('darkIcon').classList.remove('hidden');
+        //document.getElementById('lightIcon').classList.add('hidden')
+        changeTheme("androidstudio");
+    } else {
+        document.documentElement.classList.remove('dark')
+        //document.getElementById('lightIcon').classList.remove('hidden');
+        //document.getElementById('darkIcon').classList.add('hidden');
+        changeTheme("a11y-light");
+    }
+</script>
+<script>
+    const openModalButton = document.getElementById('openProblemModal');
+    const closeModalButton = document.querySelector('.modal-close');
+    const modal = document.getElementById('problemModal');
+    const problemDescriptionInput = document.getElementById('problem-description');
+    const submitButton = document.querySelector('form button');
+    const body = document.querySelector('body');
+
+    openModalButton.addEventListener('click', () => {
+        body.classList.add('!overflow-hidden'); // Prevent scrolling on the body
+        modal.classList.remove('hidden');
+    });
+
+    closeModalButton.addEventListener('click', () => {
+        body.classList.remove('!overflow-hidden'); // Re-enable scrolling on the body
+        modal.classList.add('hidden');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+            body.classList.remove('!overflow-hidden');
+        }
+    });
+
+    function navigateNoCache() {
+        window.location.href = `/render-no-cache${window.location.pathname}`;
+    }
+
+    const submitForm = async (event) => {
+        event.preventDefault();
+
+        console.log('Form submiting is started!');
+        submitButton.disabled = true;
+
+        // Get the problem description from the input field
+        const problemDescription = problemDescriptionInput.value;
+        const currentPage = window.location.href;
+
+        try {
+            // Send a POST request to the "report-problem" API endpoint
+            const response = await fetch('/report-problem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ description: problemDescription, page: currentPage }),
+            });
+
+            if (response.ok) {
+                // Report submitted successfully, you can add a success message or further actions here
+                console.log('Problem report submitted successfully.');
+                modal.classList.add('hidden'); // Close the modal
+            } else {
+                // Handle errors, such as non-200 responses
+                console.error('Failed to submit problem report.');
+                submitButton.disabled = false;
+            }
+        } catch (error) {
+            // Handle network errors or other exceptions
+            console.error('An error occurred:', error);
+            submitButton.disabled = false;
+        }
+    };
+
+    document.getElementById('problem-form').onsubmit = submitForm;
+</script>
+<script>
+    const h = document.documentElement, b = document.body;
+    const st = 'scrollTop';
+    const sh = 'scrollHeight';
+    const progress = document.getElementById('progress');
+    const header = document.getElementById('header');
+    const navcontent = document.getElementById('nav-content');
+
+    document.addEventListener('scroll', function () {
+        /* Refresh scroll % width */
+        const scroll = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+        progress.style.setProperty('--scroll', scroll + '%');
+
+        /* Apply classes for slide in bar */
+        const shouldAddClass = window.scrollY > 10;
+    });
+
+    document.getElementById('nav-toggle').onclick = function () {
+        document.getElementById("nav-content").classList.toggle("hidden");
+    }
+
+    window.addEventListener('load', function () {
+        Lightense('img:not(.no-lightense)');
+    }, false);
+</script>
+<script>
+    var lazyLoadInstance = new LazyLoad({
+        callback_loaded: function (element) {
+            console.log(element);
+            console.log(element.tagName);
+            switch (element.tagName) {
+                case "IMG":
+                    console.log(`${element} is image, wrapping into lightense`);
+                    Lightense(element);
+                    break;
+                case "IFRAME":
+                    const resizeIframe = () => {
+                        console.log(`${element} is iframe, wrapping script`);
+                        let iframeHeight = element.contentWindow.document.body.scrollHeight;
+                        if (iframeHeight == 150) {
+                            iframeHeight = 500;
+                        }
+                        element.style.height = iframeHeight + 'px';
+                    };
+                    window.addEventListener('resize', resizeIframe);
+                    setInterval(resizeIframe, 4500);
+                    resizeIframe();
+                    break;
+            }
+        },
+        callback_error: (element) => {
+            console.log(element);
+            if (element.tagName === "IMG" && element.hasAttribute("data-src")) {
+                const srcAttribute = element.attributes["data-src"].value;
+                if (srcAttribute.startsWith("https://miro.medium.com/v2/")) {
+                    element.setAttribute("src", srcAttribute.replace("https://miro.medium.com/v2/", "https://freedium.cfd/@miro/v2/"));
+                }
+            }
+        }
+    });
+</script>
+<script>
+    function navigateToOrigin() {
+        window.location.href = window.location.origin;
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const notificationContainer = document.querySelector('.notification-container');
+        const closeButton = document.querySelector('.close-button');
+        const notificationFlagString = "showNotification-trada432dfgd"
+        const body = document.querySelector('body');
+
+        function showNotification() {
+            if (!localStorage.getItem(notificationFlagString)) {
+                notificationContainer.style.display = 'block';
+                body.classList.add('!overflow-hidden');
+            }
+        }
+
+        function hideNotification() {
+            localStorage.setItem(notificationFlagString, 'false');
+            notificationContainer.style.display = 'none';
+            body.classList.remove('!overflow-hidden');
+        }
+
+        // Close button functionality
+        closeButton.addEventListener('click', () => {
+            hideNotification();
+        });
+
+        showNotification();
+    });
+</script>
+
+
+</div><div class="lightense-backdrop"></div></body></html>
